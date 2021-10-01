@@ -72,9 +72,3 @@ export default function Weather ({ zip, data, seconds, error }: {zip: any, data:
     </div>
   )
 }
-
-// export default function Weather() {
-//   return (
-
-//   );
-// }

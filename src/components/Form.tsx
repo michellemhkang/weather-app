@@ -71,9 +71,3 @@ class Form extends Component<any, any> {
 }
 
 export default Form;
-
-// export default function Header() {
-//   return (
-
-//   );
-// }
