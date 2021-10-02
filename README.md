@@ -6,7 +6,7 @@
 ## Description of Features
 The local weather app is now functional to retrieve weather data from the Open Weather API, given a valid zip code from user.
 - The design is clean and thematic with some hover interactivity. 
-- An error message will display if the input from user is invalid and a successful response from the API is not received. 
+- An error message will display if the input from user is invalid or a successful response from the API is not received. 
 - A countdown timer refreshes the load to update the data every 10 seconds.
 
 ## Run the app locally
