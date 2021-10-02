@@ -24,33 +24,46 @@ class HomePage extends Component<any, any> {
 
   // API call here
   setZip(input: any) {
-    axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${input}&appid=${API_KEY}&units=imperial`
-    )
-      .then((response) => {
-        this.setState({
-          error: false,
-          seconds: 10,
-          data: {
-            city: response.data.name,
-            description: response.data.weather[0].description,
-            temp: response.data.main.temp,
-            feelsLike: response.data.main.feels_like,
-            high: response.data.main.temp_max,
-            low: response.data.main.temp_min,
-            humidity: response.data.main.humidity,
-            wind: response.data.wind.speed
-          }
-        })
-        this.timer = setInterval(() => this.countdown(), 1000)
-        console.log('Successful GET.');
+    // Validate input before API call is made
+    let allElemAreInt = true;
+    for (let elem of input) {
+      if (isNaN(elem)) allElemAreInt = false;
+    }
+    if (input.length !== 5 || !allElemAreInt) {
+      console.log('Invalid input.')
+      this.setState({
+        error: true
       })
-      .catch((error) => {
-        this.setState({
-          error: true
+    } else {
+      axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?zip=${input}&appid=${API_KEY}&units=imperial`
+      )
+        .then((response) => {
+          this.setState({
+            error: false,
+            zip: input,
+            seconds: 10,
+            data: {
+              city: response.data.name,
+              description: response.data.weather[0].description,
+              temp: response.data.main.temp,
+              feelsLike: response.data.main.feels_like,
+              high: response.data.main.temp_max,
+              low: response.data.main.temp_min,
+              humidity: response.data.main.humidity,
+              wind: response.data.wind.speed
+            }
+          })
+          this.timer = setInterval(() => this.countdown(), 1000)
+          console.log('Successful GET.');
         })
-      })
-    this.setState({ zip: input });
+        .catch((error) => {
+          this.setState({
+            error: true
+          })
+        })
+      // this.setState({ zip: input });
+    }
   }
 
   /*

@@ -12,13 +12,13 @@ export default function Weather ({ zip, data, seconds, error }: {zip: any, data:
   const { city, description, temp, feelsLike, high, low, humidity, wind } = data;
   
   // If app is opening or user has not inputted zip
-  if (zip === '') {
+  if (zip === '' && error === false) {
     return (
       null
     )
   }
 
-  // If error in input zip or retrieving data, display error msg
+  // If error retrieving data or no data exists for the code, display error msg
   if (error) {
     return (
       <div>
