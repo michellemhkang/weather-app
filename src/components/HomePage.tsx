@@ -53,6 +53,14 @@ class HomePage extends Component<any, any> {
     this.setState({ zip: input });
   }
 
+  /*
+  ----BUG----
+  Upon subsequent new inputs entered (2nd and above), timer starts to count down in increasing increments(++).
+  For ex, if '90024' is 2nd input, timer starts decrementing by two (10-8-6-4-2-0), then upon reaching 0, three (10-7-4...) and so on.
+  App then times out.
+  Figuring out if it has to do with calling API excessively and getting blocked,
+  of it is a bug in logic of the timer.
+  */
   countdown() {
     const { zip, seconds } = this.state;
     if (seconds > 0) {
