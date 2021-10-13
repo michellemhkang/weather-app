@@ -16,18 +16,19 @@ class HomePage extends Component<any, any> {
       zip: '',
       data: {},
       seconds: 10,
-      error: false
+      error: false,
+      online: navigator.onLine
     }
     this.setZip = this.setZip.bind(this);
     this.countdown = this.countdown.bind(this);
   }
 
   // API call here
-  setZip(input: any) {
+  setZip(input: string) {
     // Validate input before API call is made
     let allElemAreInt = true;
     for (let elem of input) {
-      if (isNaN(elem)) allElemAreInt = false;
+      if (isNaN(Number(elem))) allElemAreInt = false;
     }
     if (input.length !== 5 || !allElemAreInt) {
       console.log('Invalid input.')
@@ -84,14 +85,31 @@ class HomePage extends Component<any, any> {
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('offline', (e) => {
+      this.setState({ online: false })
+    });
+    window.addEventListener('online', (e) => {
+      this.setState({ online: true })
+    });
+  }
+
   render() {
 
-    const { zip, data, seconds, error } = this.state;
+    const { zip, data, seconds, error, online } = this.state;
+
+    let status;
+    if (online) {
+      status = 'Online';
+    } else {
+      status = 'Offline';
+    }
 
     return (
       <Layout>
         <h1 className="header">Local Weather App</h1>
         <div className="app">
+          {status}
           <Form setZip={this.setZip} />
           <Weather zip={zip} data={data} seconds={seconds} error={error} />
         </div>
